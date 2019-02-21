@@ -11,7 +11,7 @@
 #define OUT_BUFFER_MULT 5
 
 off_t get_file_size(int fd);
-void decompress(Bytef *src, int src_len, void *dst, int dst_len);
+void decompress(Bytef *src, int src_len, Bytef *dst, int dst_len);
 int decompress_block(z_stream *strm, void *dst);
 
 int main(int argc, char *argv[])
@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     assert(fd != -1);
     off_t file_size = get_file_size(fd);
     off_t out_size = file_size * OUT_BUFFER_MULT;
-    unsigned char *out = malloc(out_size * sizeof(char));
+    Bytef* out = malloc(out_size * sizeof(Bytef));
     assert(out != NULL);
     void *data = mmap(NULL, file_size, PROT_READ, MAP_PRIVATE | MAP_POPULATE, fd, 0);
     assert(data != NULL);
@@ -41,7 +41,7 @@ off_t get_file_size(int fd)
     return st.st_size;
 }
 
-void decompress(Bytef *src, int src_len, void *dst, int dst_len)
+void decompress(Bytef *src, int src_len, Bytef *dst, int dst_len)
 {
     z_stream strm  = {0};
     strm.zalloc = Z_NULL;
