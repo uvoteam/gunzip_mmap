@@ -1,0 +1,8 @@
+Utility to extract multistream gzip data from file. Lots of memory is used to make extraction fast: file is mmap'ed, output buffer is 5 times larger than file size.
+
+
+Build(zlib is required):
+make
+
+Usage:
+./zcat <file_name>
