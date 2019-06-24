@@ -68,7 +68,11 @@ int decompress_block(z_stream *strm, void *dst)
     do
     {
         ret = inflate(strm, Z_NO_FLUSH);
-        assert(ret != Z_STREAM_ERROR && ret != Z_NEED_DICT && ret != Z_MEM_ERROR && ret != Z_DATA_ERROR);
+        assert(ret != Z_STREAM_ERROR
+               && ret != Z_NEED_DICT
+               && ret != Z_MEM_ERROR
+               && ret != Z_DATA_ERROR
+               && ret != Z_BUF_ERROR);
         assert(strm->avail_out > 0);
     }
     while (ret != Z_STREAM_END);
